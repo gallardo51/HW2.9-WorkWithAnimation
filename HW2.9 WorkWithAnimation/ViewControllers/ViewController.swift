@@ -8,13 +8,32 @@
 import Spring
 
 class ViewController: UIViewController {
-
+    
+    //MARK: - IB Outlets
+    @IBOutlet weak var animationView: SpringView!
+    @IBOutlet weak var textLabel: UILabel!
+    
+    var runAnimation = Animation.getRandomAnimation()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addVerticalGradientLayer(topColor: firstColor, bottomColor: secondColor)
+        textLabel.text = runAnimation.description
     }
-
-
+    
+    //MARK: - IB Actions
+    @IBAction func runButtonPressed(_ sender: UIButton) {
+        textLabel.text = runAnimation.description
+        
+        animationView.animation = runAnimation.name
+        animationView.force = CGFloat(runAnimation.force)
+        animationView.delay = CGFloat(runAnimation.delay)
+        animationView.curve = runAnimation.curve
+        animationView.animate()
+        
+        runAnimation = Animation.getRandomAnimation()
+        sender.setTitle("Run \(runAnimation.name)", for: .normal)
+    }
 }
 
 //MARK: - Set background color
